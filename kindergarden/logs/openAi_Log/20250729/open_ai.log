@@ -1,0 +1,5 @@
+2025-07-29 11:52:54 [http-nio-8080-exec-2] INFO  com.example.kindergarden.AI.OpenAIService - Detect Person ishlatildi; person=> Max Amini
+2025-07-29 11:52:55 [http-nio-8080-exec-3] INFO  com.example.kindergarden.AI.OpenAIService - Detect Country ishlatildi; address=> Tashkent Angijan region
+2025-07-29 13:25:16 [http-nio-8080-exec-2] INFO  com.example.kindergarden.AI.OpenAIController - Get person name ip_address:{}, name:{}, person:{}
+2025-07-29 13:26:59 [http-nio-8080-exec-5] INFO  com.example.kindergarden.AI.OpenAIController - Get person name ip_address:{}, name:{}, person:{}
+2025-07-29 13:28:39 [http-nio-8080-exec-2] INFO  com.example.kindergarden.AI.OpenAIController - Get person name ip_address:0:0:0:0:0:0:0:1, name:0:0:0:0:0:0:0:1, person:Yurgen Klopp

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_PATH" value="logs" />
+
+    <!-- User logs: logs/User_Log/yyyyMMdd/users.log -->
+    <appender name="USER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/User_Log/%d{yyyyMMdd}/users.log</fileNamePattern>
+            <maxHistory>180</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Transaction logs: logs/Transaction_Log/yyyyMMdd/transactions.log -->
+    <appender name="TRANSACTION_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/Transaction_Log/%d{yyyyMMdd}/transactions.log</fileNamePattern>
+            <maxHistory>180</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Transaction logs: logs/Transaction_Log/yyyyMMdd/transactions.log -->
+    <appender name="OPEN_AI" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/openAi_Log/%d{yyyyMMdd}/open_ai.log</fileNamePattern>
+            <maxHistory>180</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- Logger for user package -->
+    <logger name="com.example.user" level="DEBUG" additivity="false">
+        <appender-ref ref="USER_FILE" />
+    </logger>
+
+    <!-- Logger for transaction package -->
+    <logger name="com.example.kindergarden." level="DEBUG" additivity="false">
+        <appender-ref ref="TRANSACTION_FILE" />
+    </logger>
+
+    <!-- Logger for OPEN_AI package -->
+    <logger name="com.example.kindergarden.AI" level="DEBUG" additivity="false">
+        <appender-ref ref="OPEN_AI" />
+    </logger>
+
+    <!-- Console: umumiy loglar -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kindergartens & Pupils</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 2rem;
+        }
+        h1, h2 {
+          color: #333;
+        }
+        table {
+          width: 50%;
+          border-collapse: collapse;
+          margin-top: 1rem;
+          margin-bottom: 3rem;
+        }
+        th, td {
+          border: 1px solid #ccc;
+          padding: 0.5rem;
+          text-align: left;
+        }
+        th {
+          background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Kindergartens</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th> <!-- Adjust if not 'name' -->
+    </tr>
+    </thead>
+    <tbody id="kindergarten-table-body">
+    <!-- Kindergarten rows -->
+    </tbody>
+</table>
+
+<h2>Pupils</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th> <!-- Adjust these fields -->
+        <th>Last Name</th>
+        <th>Age</th>
+    </tr>
+    </thead>
+    <tbody id="pupil-table-body">
+    <!-- Pupil rows -->
+    </tbody>
+</table>
+
+<script>
+    const KINDERGARTEN_API = 'http://localhost:8080/api/auth/kindergardens';
+    const PUPILS_API = 'http://localhost:8080/api/auth/pupils';
+
+    // Load kindergartens
+    function loadKindergartens() {
+      fetch(KINDERGARTEN_API)
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.getElementById('kindergarten-table-body');
+          tbody.innerHTML = '';
+          data.forEach(k => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${k.id}</td>
+              <td>${k.firmName || k.title || '(no name)'}</td>
+            `;
+            tbody.appendChild(row);
+          });
+        })
+        .catch(err => alert('Error loading kindergartens: ' + err));
+    }
+
+    // Load pupils
+    function loadPupils() {
+      fetch(PUPILS_API)
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.getElementById('pupil-table-body');
+          tbody.innerHTML = '';
+          data.forEach(p => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${p.id}</td>
+              <td>${p.name || ''}</td>
+              <td>${p.sname || ''}</td>
+              <td>${p.lname || ''}</td>
+            `;
+                 tbody.appendChild(row);
+          });
+        })
+        .catch(err => alert('Error loading pupils: ' + err));
+    }
+
+    // Load both on page load
+    loadKindergartens();
+    loadPupils();
+</script>
+
+</body>
+</html>

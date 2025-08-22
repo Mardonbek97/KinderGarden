@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kindergarten List</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 2rem;
+        }
+        h1 {
+          color: #333;
+        }
+        table {
+          width: 40%;
+          border-collapse: collapse;
+          margin-top: 1rem;
+        }
+        th, td {
+          border: 1px solid #ccc;
+          padding: 0.5rem;
+          text-align: left;
+        }
+        th {
+          background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Kindergardens</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody id="kindergarten-table-body">
+    <!-- Data will be inserted here -->
+    </tbody>
+</table>
+
+<script>
+    const API_URL = 'http://localhost:8080/api/auth/kindergardens';
+
+    function loadKindergartens() {
+      fetch(API_URL)
+        .then(response => response.json())
+        .then(data => {
+          const tbody = document.getElementById('kindergarten-table-body');
+          tbody.innerHTML = '';
+          data.forEach(k => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${k.id}</td>
+              <td>${k.firmName}</td>
+            `;
+            tbody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          alert('Error fetching data: ' + error.message);
+        });
+    }
+
+    // Load data when page loads
+    loadKindergartens();
+</script>
+
+</body>
+</html>

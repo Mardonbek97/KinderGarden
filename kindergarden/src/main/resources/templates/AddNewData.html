@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Kindergarten & Pupil</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 2rem;
+        }
+        h2 {
+          margin-top: 2rem;
+        }
+        form {
+          margin-bottom: 2rem;
+          background: #f9f9f9;
+          padding: 1rem;
+          border-radius: 8px;
+          max-width: 400px;
+        }
+        label {
+          display: block;
+          margin-top: 0.5rem;
+        }
+        input {
+          width: 100%;
+          padding: 0.4rem;
+          margin-top: 0.2rem;
+        }
+        button {
+          margin-top: 1rem;
+          padding: 0.6rem 1rem;
+          background-color: #28a745;
+          color: white;
+          border: none;
+          cursor: pointer;
+        }
+        .msg {
+          color: green;
+          font-weight: bold;
+        }
+        .error {
+          color: red;
+          font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Add Data</h1>
+
+<!-- Kindergarten Form -->
+<h2>Add Kindergarten</h2>
+<form id="kindergartenForm">
+    <label for="kname">Kindergarten Name</label>
+    <input type="text" id="kname" name="kname" required>
+    <button type="submit">Add Kindergarten</button>
+    <div id="kmsg" class="msg"></div>
+</form>
+
+<!-- Pupil Form -->
+<h2>Add Pupil</h2>
+<form id="pupilForm">
+    <label for="firstName">First Name</label>
+    <input type="text" id="firstName" required>
+
+    <label for="lastName">Last Name</label>
+    <input type="text" id="lastName" required>
+
+    <label for="age">Age</label>
+    <input type="number" id="age" required>
+
+    <button type="submit">Add Pupil</button>
+    <div id="pmsg" class="msg"></div>
+</form>
+
+<script>
+    const KINDERGARTEN_POST_URL = "http://localhost:8080/api/auth/kindergardens/add";
+    const PUPIL_POST_URL = "http://localhost:8080/api/auth/pupils/create";
+
+    document.getElementById('kindergartenForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('kname').value;
+
+      fetch(KINDERGARTEN_POST_URL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name: name })
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to save");
+        return res.text();
+      })
+      .then(msg => {
+        document.getElementById('kmsg').innerText = msg || 'Kindergarten added successfully!';
+        this.reset();
+      })
+      .catch(err => {
+        document.getElementById('kmsg').innerText = 'Error: ' + err.message;
+        document.getElementById('kmsg').classList.add('error');
+      });
+    });
+
+    document.getElementById('pupilForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+
+      fetch(PUPIL_POST_URL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ firstName, lastName })
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to save");
+        return res.text();
+      })
+      .then(msg => {
+        document.getElementById('pmsg').innerText = msg || 'Pupil added successfully!';
+        this.reset();
+      })
+      .catch(err => {
+        document.getElementById('pmsg').innerText = 'Error: ' + err.message;
+        document.getElementById('pmsg').classList.add('error');
+      });
+    });
+</script>
+
+</body>
+</html>
